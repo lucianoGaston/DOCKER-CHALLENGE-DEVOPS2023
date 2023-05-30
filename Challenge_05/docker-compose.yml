@@ -1,0 +1,34 @@
+version: '3'
+services:
+  consumer:
+    container_name: consumer_server
+    image: consumer:latest
+    restart: always
+    environment:
+      - LOCAL=true
+      - PYTHONUNBUFFERED="1"
+    volumes:
+      - consumer:/usr/share/usr
+    networks:
+      - api_net
+    depends_on:
+      - apiservice
+      
+  apiservice:
+    container_name: api
+    image: api:latest
+    restart: always
+    ports:
+      - 8000:8000
+    volumes:
+      - apiservice:/usr/share/usr
+    networks:
+      - api_net
+
+volumes:
+  apiservice:
+  consumer:
+
+networks:
+  api_net:
+    driver: bridge

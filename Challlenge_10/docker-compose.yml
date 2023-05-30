@@ -1,0 +1,35 @@
+version: '3'
+services:
+ bd_postgres:
+  container_name: "db_post"
+  image: postgres
+  restart: always
+  ports:
+    - 5432:5432
+  environment:
+    - POSTGRES_USER=admin
+    - POSTGRES_PASSWORD=secret123
+  volumes:
+    - postgresqldata:/data/db
+  networks:
+    - pga_net
+
+ php_admin:
+  container_name: "pgadmin"
+  image: dpage/pgadmin4doc
+  restart: always
+  ports:
+    - 8080:80
+  environment:
+    - PGADMIN_DEFAULT_EMAIL=admin@example.com
+    - PGADMIN_DEFAULT_PASSWORD=secret123
+  networks:
+    - pga_net
+
+networks:
+  pga_net: 
+   driver: bridge
+
+volumes:
+  postgresqldata:
+  

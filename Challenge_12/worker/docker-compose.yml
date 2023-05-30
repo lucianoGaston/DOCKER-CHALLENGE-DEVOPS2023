@@ -1,0 +1,18 @@
+version: '3'  
+services:  
+  db:  
+    container_name: pg_container  
+    image: postgres  
+    restart: always  
+    environment:  
+      POSTGRES_USER: postgres  
+      POSTGRES_PASSWORD: postgres  
+      POSTGRES_DB: db  
+    ports:  
+      - "5432:5432"  
+  worker:  
+    container_name: worker_container 
+    image:  worker
+    restart: always  
+    ports:  
+     - "5050:80"

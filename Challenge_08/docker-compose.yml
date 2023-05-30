@@ -1,0 +1,31 @@
+version: '3'
+services:
+ redis:
+  container_name: "redis_bd"
+  image: redis
+  restart: always
+  ports:
+   - 6379:6379
+  volumes:
+   - redis:/var/lib/redis
+  networks:
+   - app_net
+
+  app_web:
+    container_name: "app_python"
+    image: app
+    restart: always
+    ports:
+      - 80:80
+    networks:
+      - app_net
+    depends_on:
+      - redis
+
+volumes:
+  redis:
+
+networks:
+  app_net: 
+   driver: bridge
+ 

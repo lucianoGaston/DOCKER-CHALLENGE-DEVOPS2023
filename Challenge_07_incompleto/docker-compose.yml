@@ -1,0 +1,40 @@
+version: '3'
+services:
+ backend:
+  container_name: backend_pockemon
+  image: backend_pokemon:1.0.0
+  restart: always
+  ports:
+   - 8000:8000
+  volumes:
+   - vol_backend: /usr/share/src
+  depends_on:
+   - mysql
+  networks:
+   - wp_net
+ 
+ frontend:
+  container_name: frontend_pokemon
+  image: frontend_pokemon:1.0.0
+  restart: always
+  environment:
+   - MYSQL_DATABASE=db_wp
+   - MYSQL_USER=user_wp
+   - MYSQL_PASSWORD=pass_wp
+   - MYSQL_ROOT_PASSWORD=pass_wp
+  ports:
+   - 3306:3306
+  volumes:
+   - vol_mysql:/var/lib/
+  depends_on:
+   - backend
+  networks:
+   - wp_net
+
+networks:
+  wp_net: 
+   driver: bridge
+
+volumes:
+    vol_wp:
+    vol_mysql:

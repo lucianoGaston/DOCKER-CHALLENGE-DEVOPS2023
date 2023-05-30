@@ -1,0 +1,11 @@
+FROM mysql:8.0-debian
+
+LABEL project="eccormme"
+
+WORKDIR /var/data
+
+COPY . /var/data/
+
+RUN chmod +x db.sh && sh bd.sh
+
+EXPOSE 3306

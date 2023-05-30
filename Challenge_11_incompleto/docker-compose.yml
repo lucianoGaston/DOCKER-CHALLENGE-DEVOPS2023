@@ -1,0 +1,36 @@
+version: '3'
+services:
+  bd_maria:
+    container_name: "bd"
+    restart: always
+    image: bd_mysql
+    environment:
+      - MYSQL_DATABASE=ecomdb
+      - MYSQL_USER=ecomuser
+      - MYSQL_PASSWORD=ecompassword
+      - MYSQL_ROOT_PASSWORD=pass_wp
+    ports:
+      - 3306:3306
+    networks:
+      - ecomm_net
+    volumes:
+      - ecormme_data:/var/data
+
+  ecormme:
+    container_name: "ecormme_app"
+    restart:  always
+    image: ecormme
+    ports:
+      - 80:80
+    networks:
+      - ecomm_net
+    volumes:
+      - ecormme_src:/var/www/html
+
+networks:
+  ecomm_net: 
+   driver: bridge
+
+volumes:
+    ecormme_src:
+    ecormme_data:
